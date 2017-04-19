@@ -1,0 +1,107 @@
+---
+output:
+  html_document:
+    keep_md: yes
+    toc: no
+    self_contained: no
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(plotly)
+library(tidyverse)
+library(raster)
+library(fields)
+library(gridExtra)
+library(maptools)
+```
+
+### Pensacola Bay bathymetry
+
+```{r fig.width = 12, fig.height = 8, echo = T, message = F}
+pb <- raster('M:/GIS/EFDC/pb_hi')
+pbgom <- raster('M:/GIS/EFDC/pb_gom_hi')
+rast <- list(pb, pbgom)
+names(rast) <- c('pb', 'pbgom')
+
+deps <- sapply(names(rast), function(x){
+  
+  rst <- rast[[x]]
+  chk <- coordinates(rst)
+  vals <- values(rst)
+  
+  chk <- chk[!is.na(vals), ]
+  vals <- na.omit(vals)
+  
+  dat <- data.frame(chk, vals, x, stringsAsFactors = F)
+  names(dat) <- c('long', 'lat', 'depth', 'site')
+  
+  return(dat)
+  
+  }, simplify = F) %>% 
+  bind_rows %>% 
+  mutate(    
+    site = factor(site, levels = names(rast)), 
+    `Depth (m)` = depth
+  )
+
+mythm <- theme_minimal() +
+  theme(
+    panel.border = element_rect(colour = "black", fill = NA, size = 0.5),
+    axis.ticks.x = element_line(),
+    axis.ticks.y = element_line(),
+    axis.ticks.length = unit(.1, "cm"), 
+    axis.title.x = element_blank(), 
+    axis.title.y = element_blank()
+  )  
+
+toplo1 <- filter(deps, site %in% 'pb')
+p1 <- ggplot(toplo1, aes(x = long, y = lat, fill = `Depth (m)`)) + 
+  geom_tile() + 
+  mythm + 
+  coord_equal(ratio = 1) +
+  scale_fill_distiller(palette = 'Spectral')
+
+toplo2 <- filter(deps, site %in% 'pbgom')
+p2 <- ggplot(toplo2, aes(x = long, y = lat, fill = `Depth (m)`)) + 
+  geom_tile() + 
+  mythm + 
+  coord_equal(ratio = 1) +
+  scale_fill_distiller(palette = 'Spectral')
+p1
+p2
+```
+
+```{r fig.width = 12, fig.height = 8, echo = T, message = F}
+# get raster
+rast <- raster('M:/GIS/EFDC/pb_lo')
+
+# convert to matrix format
+vals <- -1 * values(rast)
+crds <- coordinates(rast)
+dat <- data.frame(crds, vals) %>% 
+  spread(x, vals) %>% 
+  dplyr::select(-y) %>% 
+  as.matrix
+
+# for changing the aspect ratio 
+scene <- list(
+  aspectmode = 'manual', 
+  aspectratio = list(x = 1, y = 1, z = 0.1),
+  scene = list(bgcolor = "rgb(244, 244, 248)")
+  )
+
+# create plot
+depth_m <- dat
+p1 <- plot_ly(z = ~depth_m) %>% 
+  add_surface() %>% 
+  layout(scene = scene)
+p1
+
+```
+
+
