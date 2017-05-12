@@ -1,17 +1,6 @@
 # README
 Marcus W. Beck, beck.marcus@epa.gov  
 
-```
-## Warning: package 'tidyverse' was built under R version 3.3.3
-```
-
-```
-## Warning: package 'tibble' was built under R version 3.3.3
-```
-
-```
-## Warning: package 'maptools' was built under R version 3.3.3
-```
 ![](figs/efdc_flo.png)
 
 ## Input files
@@ -110,8 +99,7 @@ Workflow
     
     * `mask.inp` File specifying thin barriers to block flow across specified cell faces.
 
-6. Add depth to to `lxly.inp`
-
+6. Add depth to to `lxly.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depth column in `lxly.inp` is replaced with the average depth in each grid cell (L).
 ![](efdc_inst_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 

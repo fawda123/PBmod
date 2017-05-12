@@ -5,7 +5,7 @@ output:
     keep_md: yes
 author: "Marcus W. Beck, beck.marcus@epa.gov"
 ---
-```{r message = F, echo = F}
+```{r message = F, echo = F, warning = F}
 knitr::opts_chunk$set(echo = F, warning = F, message = F)
 
 library(plotly)
@@ -113,10 +113,10 @@ Workflow
     
     * `mask.inp` File specifying thin barriers to block flow across specified cell faces.
 
-6. Add depth to to `lxly.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depht column in `lxly.inp` is replaced with the average depth in each grid cell (L).
-
-```{r, fig.height = 4, fig.width = 8}
+6. Add depth to to `lxly.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depth column in `lxly.inp` is replaced with the average depth in each grid cell (L).
+```{r, fig.height = 6, fig.width = 10}
 data(pb_grid)
+
 deps <- dplyr::select(pb_grid@data, L, depth) %>% 
   rename(id = L) %>% 
   mutate(id = as.character(id))
@@ -126,7 +126,7 @@ toplo <- fortify(pb_grid, region = 'L') %>%
 p <- ggplot(toplo) + 
   aes(long, lat, group = group, fill = depth) + 
   geom_polygon() +
-  # geom_path(color="grey") +
+  geom_path(color="darkgrey") +
   coord_equal() + 
   scale_fill_distiller(palette = 'Spectral') +
   theme_minimal()
