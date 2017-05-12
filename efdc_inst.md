@@ -90,8 +90,6 @@ Workflow
     
     * `dxdy.inp` File specifying horizontal grid spacing or metrics, depth, bottom elevation, bottom roughness and vegetation classes for either Cartesian or curvilinear-orthogonal horizontal grids.
     
-    * `gcellmap.inp` File specifying a Cartesian grid overlay for a curvilinear-orthogonal grid.
-    
     * `lxly.inp` File specifying horizontal cell center coordinates and cell orientations for
     either Cartesian or curvilinear-orthogonal grids.
     
@@ -99,8 +97,10 @@ Workflow
     
     * `mask.inp` File specifying thin barriers to block flow across specified cell faces.
 
-6. Add depth to to `lxly.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depth column in `lxly.inp` is replaced with the average depth in each grid cell (L).
+6. Add depth to to `dxdy.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depth column in `dxdy.inp` is replaced with the average depth in each grid cell (L).
 ![](efdc_inst_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+![](efdc_inst_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
 ## Time series forcing and boundary condition files

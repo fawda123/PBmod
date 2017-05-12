@@ -104,8 +104,6 @@ Workflow
     
     * `dxdy.inp` File specifying horizontal grid spacing or metrics, depth, bottom elevation, bottom roughness and vegetation classes for either Cartesian or curvilinear-orthogonal horizontal grids.
     
-    * `gcellmap.inp` File specifying a Cartesian grid overlay for a curvilinear-orthogonal grid.
-    
     * `lxly.inp` File specifying horizontal cell center coordinates and cell orientations for
     either Cartesian or curvilinear-orthogonal grids.
     
@@ -113,7 +111,7 @@ Workflow
     
     * `mask.inp` File specifying thin barriers to block flow across specified cell faces.
 
-6. Add depth to to `lxly.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depth column in `lxly.inp` is replaced with the average depth in each grid cell (L).
+6. Add depth to to `dxdy.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depth column in `dxdy.inp` is replaced with the average depth in each grid cell (L).
 ```{r, fig.height = 6, fig.width = 10}
 data(pb_grid)
 
@@ -131,6 +129,33 @@ p <- ggplot(toplo) +
   scale_fill_distiller(palette = 'Spectral') +
   theme_minimal()
 p
+```
+
+```{r, fig.height = 8, fig.width = 6}
+
+# import dxdy file with no depth data
+dxdy <- readLines('EFDC/dxdydep.inp')
+
+# format for merge
+dxdy <- dxdy[-c(1:4)] %>% 
+  strsplit(., '\\s+') %>% 
+  do.call('rbind', .) %>% 
+  data.frame(stringsAsFactors = F) %>% 
+  rename(
+    I = X2, 
+    J = X3, 
+    depth = X6
+  ) %>% 
+  mutate(
+    I = as.numeric(I), 
+    J = as.numeric(J), 
+    depth = as.numeric(depth)
+  )
+    
+ggplot(dxdy, aes(x = I, y = J, colour = depth)) + 
+  geom_point() + 
+  scale_colour_distiller(palette = 'Spectral') + 
+  theme_minimal()
 ```
 
 
