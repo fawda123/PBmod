@@ -1,0 +1,121 @@
+# README
+Marcus W. Beck, beck.marcus@epa.gov  
+
+```
+## Warning: package 'tidyverse' was built under R version 3.3.3
+```
+
+```
+## Warning: package 'tibble' was built under R version 3.3.3
+```
+
+```
+## Warning: package 'maptools' was built under R version 3.3.3
+```
+![](figs/efdc_flo.png)
+
+## Input files
+
+`aser.inp` Atmospheric forcing time series file.
+
+`cell.inp` Horizontal cell type identifier file.
+
+`celllt.inp` Horizontal cell type identifier file for saving mean mass transport.
+
+`dser.inp` Dye concentration time series file.
+
+`dxdy.inp` File specifying horizontal grid spacing or metrics, depth, bottom elevation, bottom roughness and vegetation classes for either Cartesian or curvilinear-orthogonal horizontal grids.
+
+`dye.inp` File with initial dye distribution for cold start simulations.
+
+`efdc.inp` Master input file.
+
+`fldang.inp` File specifying the CCW angle to the flood axis of the local M2 tidal ellipses. 
+
+`gcellmap.inp` File specifying a Cartesian grid overlay for a curvilinear-orthogonal grid.
+
+`gwater.inp` File specifying the characteristic of a simple soil moisture model.
+
+`lxly.inp` File specifying horizontal cell center coordinates and cell orientations for
+either Cartesian or curvilinear-orthogonal grids.
+
+`mappgns.inp` Specifies configuration of the model grid to represent a periodic region in the north-south or computational y direction.
+
+`mask.inp` File specifying thin barriers to block flow across specified cell faces.
+
+`modchan.inp` Subgrid scale channel model specification file.
+
+`moddxdy.inp` File specifying modification to cell sizes (used primarily for calibration adjustment of subgrid scale channel widths)
+
+`pser.inp` Open boundary water surface elevation time series file.
+
+`qctl.inp` Hydraulic control structure characterization file.
+
+`qser.inp` Volumetric source-sink time series file.
+
+`restart.inp` File for restarting a simulation.
+
+`restran.inp` File with arbitrary time interval averaged transport fields used to drive mass transport only simulations.
+
+`salt.inp` File with initial salinity distribution for cold start, salinity stratified flow simulations.
+
+`sdser.inp` Suspended sediment concentration time series file.
+
+`show.inp` File controlling screen print of conditions in a specified cell during simulation runs.
+
+`sser.inp` Salinity time series file.
+
+`sfser.inp` Shellfish release time series file.
+
+`sfbser.inp` Shellfish behavior time series file.
+
+`tser.inp` Temperature time series file.
+
+`vege.inp` Vegetation resistance characterization file. 
+
+`wave.inp` Specifies a high frequency surface gravity wave field require to activate the wave-current boundary layer model and/or wave induced current model. 
+
+## Create model grid
+
+Importing a base map: https://www.youtube.com/watch?v=URDI1LP_McI
+
+Using the software: https://www.youtube.com/watch?v=YUrRRYfGq5I\
+
+Example grids: http://www.efdc-explorer.com/products/interfaces.html
+
+Workflow 
+
+1. *Create base map* A geo-referenced background map must be imported as a .georef file in CVL Grid.  This file is created by importing an unreferenced .bmp file which can be created in ArcMap.  The user identifies two reference points in UTM coordinates on the .bmp file.  These two reference points can be anywhere on the image.  The reference points are then used to identify the upper left and lower right corners of the image.  The .georef file can be saved once all four coordinates are identified. The image below shows the imported .bmp file.  Lat/Lon locations of two points were displayed for manual entry in CVL Grid. ![](figs/bath_ref.png)
+
+2. *Create a small grid* The complete grid is created by sequential combination of smaller grids. The smaller grids are created by outlining a general area with spline curves, then filling the area with an i x j grid.  Four separate splines are required for each grid and their intersection points must be approximately perpendicular.  The spline and create grid functions are on the top toolbar.  Only one spline layer can be used at a time, so it should be deleted after creating each grid. Individual grids can be edited using a combination of manual repositioning with grid buttons on the top toolbar or automated tools for smoothing, orthogonality, redistribution, refining (more cells), or coarsening (less cells).  The latter functions are accessed with a right-mouse click.  
+
+3.	*Combine one grid to another* After creating the first grid, another small grid can be created and combined with the first.  This is repeated until the entire grid is created.  Two grids are combined by right-clicking the map, selecting the connect grid option, and identifying points to join.  CVL Grid combines all nearest nodes automatically and works best if the cell dimensions between grids are equal.  
+
+4.	*Check and edit orthogonality* Grid orthogonality can be viewed by selecting the appropriate option in the top-right menu.  Orthogonality can be improved through manual editing or with the orthogonality tool (local or global) available with right-click.  
+
+5.	*Export grid* The grid can be exported as a shapefile from the file menu on the top and as EFDC .inp files using the separate button on the top toolbar.  The relevant grid input files are:
+
+    * `cell.inp` Horizontal cell type identifier file.
+    
+    * `celllt.inp` Horizontal cell type identifier file for saving mean mass transport.
+    
+    * `dxdy.inp` File specifying horizontal grid spacing or metrics, depth, bottom elevation, bottom roughness and vegetation classes for either Cartesian or curvilinear-orthogonal horizontal grids.
+    
+    * `gcellmap.inp` File specifying a Cartesian grid overlay for a curvilinear-orthogonal grid.
+    
+    * `lxly.inp` File specifying horizontal cell center coordinates and cell orientations for
+    either Cartesian or curvilinear-orthogonal grids.
+    
+    * `mappgns.inp` Specifies configuration of the model grid to represent a periodic region in the north-south or computational y direction.
+    
+    * `mask.inp` File specifying thin barriers to block flow across specified cell faces.
+
+6. Add depth to to `lxly.inp`
+
+![](efdc_inst_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+
+## Time series forcing and boundary condition files
+
+
+
