@@ -3,7 +3,7 @@ library(raster)
 library(rgdal)
 
 ######
-# estimate average depth in each ij grid cel for EFDC grid
+# estimate average depth in each ij grid cell for EFDC grid
 
 # # bathymetry raster, created manually in arcgis
 # rst <- raster('M:/GIS/EFDC/pb_gom_full')
@@ -50,12 +50,12 @@ dxdy <- dxdy[-c(1:4)] %>%
     J = X3
   ) 
 
-# arrange depths in pb_grid by i, j valeus in dxdy
+# arrange depths in pb_grid by i, j values in dxdy
 deps <- dplyr::select(dxdy, I, J) %>% 
   left_join(., pb_grid, by = c('I', 'J'))
 
 # fill depths in dxdy with the values in deps, correct order
-# first column is depht, second is bottom depth (negative)
+# first column is depth, second is bottom depth (negative)
 dxdy$X6 <- deps$depth
 dxdy$X7 <- paste0('-', deps$depth)
 
@@ -63,5 +63,5 @@ dxdy$X7 <- paste0('-', deps$depth)
 dxdy <- apply(dxdy, 1, paste, collapse = '  ')
 dxdy <- c(dxdyhd, dxdy)
 
-# save
-writeLines(dxdy, 'EFDC/dxdydep.inp')
+# # save
+# writeLines(dxdy, 'EFDC/dxdy.inp')

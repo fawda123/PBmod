@@ -1,0 +1,23 @@
+C	sser.inp	file							
+C	Savannah	Harbor							
+C									
+C	ISTYP	"MCSER(NS,1)"	"TCCSER(NS,1)"	"TACSER(NS,1)"	"RMULADJ(NS,1)"	"ADDADJ(NS,1)"			
+C									
+C									
+C									
+C									
+C									
+C									
+C									
+C									
+C									
+C	"TCSER(M,NS,1)"	"(CSER(M,K,NS,1),K=1,KC)"	"!(mcser(ns,1)"	pairs)					
+C									
+1	2	86400	0	1	0
+1.08	1.06	1.04	1.02	1
+-1000	35
+10000	35
+1	2	86400	0	1	0
+1.2	1.15	1.1	1.05	1
+-1000	30
+10000	30

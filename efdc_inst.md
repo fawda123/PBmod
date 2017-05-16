@@ -98,12 +98,31 @@ Workflow
     * `mask.inp` File specifying thin barriers to block flow across specified cell faces.
 
 6. Add depth to to `dxdy.inp`.  This is done in R by combining the cvl grid shapefile and manually created bathymetry raster. The empty depth column in `dxdy.inp` is replaced with the average depth in each grid cell (L).
+
 ![](efdc_inst_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 ![](efdc_inst_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
 ## Time series forcing and boundary condition files
+
+Input data for nine years were previously assembled by TetraTech. These included meteorological data for atmospheric pressure, temperature, rainfall, wind speed and direction, and cloud cover.  Thirteen inland boundary conditions included time series of freshwater inflows at eight sites and five point sources, where flow and water temperature were available at each location. Data from Offshore bounday conditions were water surface elevation (WSE)), temperature, and salinity.  Water surface elevation and temperature were obtained from the NOAA tidal station 8729840 near the port of Pensacola.  Offshore boundary salinity values were estimated at 35 psu for each cell. 
+
+`ASER.INP` Atmospheric forcing conditions including pressure, temperature, rainfall, evaporation by decimal julian day
+
+`PSER.INP` Open boundary water surface elevation time series file, NOAA tidal station 8729840 (near port).
+
+`QSER.INP` Inflows by julian day, includes rivers/streams and  point sources
+
+`SSER.INP` Offshore salinity boundary conditions
+
+`TSER.INP` Temperature for each inflow, by julian day, including temperature from offshore boundary conditions
+
+`WSER.INP` Hourly measurements of wind speed and direction
+
+
+
+
 
 
 
