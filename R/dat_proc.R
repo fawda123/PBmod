@@ -2,6 +2,8 @@ library(tidyverse)
 library(raster)
 library(rgdal)
 
+source('R/funcs.R')
+
 ######
 # estimate average depth in each ij grid cell for EFDC grid
 
@@ -65,3 +67,16 @@ dxdy <- c(dxdyhd, dxdy)
 
 # # save
 # writeLines(dxdy, 'EFDC/dxdy.inp')
+
+######
+# setup TEMP.INP, SALT.INP, DYE.INP
+
+getinp(dxdyin = 'EFDC/dxdy.inp', sig = 5, val = 14, outfl = 'EFDC/TEMP.INP', 
+  frstrow = 'C       TEMP.INP      PENSACOLA BAY, C')
+
+getinp(dxdyin = 'EFDC/dxdy.inp', sig = 5, val = 23, outfl = 'EFDC/SALT.INP', 
+  frstrow = 'C       SALT.INP      PENSACOLA BAY, PPT')
+
+getinp(dxdyin = 'EFDC/dxdy.inp', sig = 5, val = 0, outfl = 'EFDC/DYE.INP', 
+  frstrow = 'C       DYE.INP      PENSACOLA BAY, PPT')
+
