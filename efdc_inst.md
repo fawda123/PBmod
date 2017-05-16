@@ -3,67 +3,6 @@ Marcus W. Beck, beck.marcus@epa.gov
 
 ![](figs/efdc_flo.png)
 
-## Input files
-
-`aser.inp` Atmospheric forcing time series file.
-
-`cell.inp` Horizontal cell type identifier file.
-
-`celllt.inp` Horizontal cell type identifier file for saving mean mass transport.
-
-`dser.inp` Dye concentration time series file.
-
-`dxdy.inp` File specifying horizontal grid spacing or metrics, depth, bottom elevation, bottom roughness and vegetation classes for either Cartesian or curvilinear-orthogonal horizontal grids.
-
-`dye.inp` File with initial dye distribution for cold start simulations.
-
-`efdc.inp` Master input file.
-
-`fldang.inp` File specifying the CCW angle to the flood axis of the local M2 tidal ellipses. 
-
-`gcellmap.inp` File specifying a Cartesian grid overlay for a curvilinear-orthogonal grid.
-
-`gwater.inp` File specifying the characteristic of a simple soil moisture model.
-
-`lxly.inp` File specifying horizontal cell center coordinates and cell orientations for
-either Cartesian or curvilinear-orthogonal grids.
-
-`mappgns.inp` Specifies configuration of the model grid to represent a periodic region in the north-south or computational y direction.
-
-`mask.inp` File specifying thin barriers to block flow across specified cell faces.
-
-`modchan.inp` Subgrid scale channel model specification file.
-
-`moddxdy.inp` File specifying modification to cell sizes (used primarily for calibration adjustment of subgrid scale channel widths)
-
-`pser.inp` Open boundary water surface elevation time series file.
-
-`qctl.inp` Hydraulic control structure characterization file.
-
-`qser.inp` Volumetric source-sink time series file.
-
-`restart.inp` File for restarting a simulation.
-
-`restran.inp` File with arbitrary time interval averaged transport fields used to drive mass transport only simulations.
-
-`salt.inp` File with initial salinity distribution for cold start, salinity stratified flow simulations.
-
-`sdser.inp` Suspended sediment concentration time series file.
-
-`show.inp` File controlling screen print of conditions in a specified cell during simulation runs.
-
-`sser.inp` Salinity time series file.
-
-`sfser.inp` Shellfish release time series file.
-
-`sfbser.inp` Shellfish behavior time series file.
-
-`tser.inp` Temperature time series file.
-
-`vege.inp` Vegetation resistance characterization file. 
-
-`wave.inp` Specifies a high frequency surface gravity wave field require to activate the wave-current boundary layer model and/or wave induced current model. 
-
 ## Create model grid
 
 Importing a base map: https://www.youtube.com/watch?v=URDI1LP_McI
@@ -103,12 +42,13 @@ Workflow
 
 ![](efdc_inst_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-
 ## Time series forcing and boundary condition files
 
-Input data for nine years were previously assembled by TetraTech. These included meteorological data for atmospheric pressure, temperature, rainfall, wind speed and direction, and cloud cover.  Thirteen inland boundary conditions included time series of freshwater inflows at eight sites and five point sources, where flow and water temperature were available at each location. Data from Offshore bounday conditions were water surface elevation (WSE)), temperature, and salinity.  Water surface elevation and temperature were obtained from the NOAA tidal station 8729840 near the port of Pensacola.  Offshore boundary salinity values were estimated at 35 psu for each cell. 
+Input data for nine years were previously assembled by TetraTech. These included meteorological data for atmospheric pressure, temperature, rainfall, wind speed and direction, and cloud cover.  Thirteen inland boundary conditions included time series of freshwater inflows at eight sites and five point sources, where flow and water temperature were available at each location. Data from Offshore bounday conditions were water surface elevation (WSE)), temperature, and salinity.  Water surface elevation and temperature were obtained from the NOAA tidal station 8729840 near the port of Pensacola.  Offshore boundary salinity values were estimated at 35 psu for each cell.  The following files were copied directly from an existing model but will need to be updated if new or different boundary conditions are used.  
 
 `ASER.INP` Atmospheric forcing conditions including pressure, temperature, rainfall, evaporation by decimal julian day
+
+`DSER.INP` Dye concentration time series file.
 
 `PSER.INP` Open boundary water surface elevation time series file, NOAA tidal station 8729840 (near port).
 
@@ -120,7 +60,23 @@ Input data for nine years were previously assembled by TetraTech. These included
 
 `WSER.INP` Hourly measurements of wind speed and direction
 
+Other input data are not empirical observations, e.g., dye simulations, or are required to 'cold-start' the model.  These must be updated for the grid (based on i, j) and sigma layers.  An R function was created for each that requires `dxdy.inp` as input.   
 
+`DYE.INP` File with initial dye distribution for cold start simulations.
+
+`SALT.INP` File with initial salinity distribution for cold start, salinity stratified flow simulations.
+
+`TEMP.INP` File with initial temperature distribution for cold start simulations.
+
+Miscellaneous files were copied from an existing EFDC model. 
+
+`gwater.inp` File specifying the characteristic of a simple soil moisture model.
+
+`modchan.inp` Subgrid scale channel model specification file.
+
+`moddxdy.inp` File specifying modification to cell sizes (used primarily for calibration adjustment of subgrid scale channel widths)
+
+`show.inp` File controlling screen print of conditions in a specified cell during simulation runs.
 
 
 

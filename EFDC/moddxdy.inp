@@ -1,0 +1,8 @@
+C   READ(1,*)ITMP,JTMP,RMDX,RMDY   (modify input values of DX and DY)
+C   DXIJ(ITMP,JTMP)=RMDX*DXIJ(ITMP,JTMP)
+C   DYIJ(ITMP,JTMP)=RMDY*DYIJ(ITMP,JTMP)
+C  NMDXDY
+   0
+
+
+

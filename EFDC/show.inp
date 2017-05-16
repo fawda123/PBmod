@@ -1,8 +1,8 @@
-*  SHOW.INP FILE, IN FREE FORMAT ACROSS LINE
-*
-*  NSTYPE    NSHOWR    ISHOWC   JSHOWC
-*
-*  ZSSMIN    ZSSMAX    SSALMAX
-*
-          0    1000      27      59      50
-          0       0       0
+C  show.inp file, in free format across line
+C                                                                  
+C  NSTYPE    NSHOWR    ISHOWC   JSHOWC                            
+C
+C  ZSSMIN    ZSSMAX    SSALMAX                                                 
+C
+   3          100      3      3    1440      !      
+  -500.       500.       40.
