@@ -171,6 +171,28 @@ $(document).ready(function () {
 <p><code>moddxdy.inp</code> File specifying modification to cell sizes (used primarily for calibration adjustment of subgrid scale channel widths)</p>
 <p><code>show.inp</code> File controlling screen print of conditions in a specified cell during simulation runs.</p>
 </div>
+<div id="update-efdc.inp" class="section level2">
+<h2>Update <code>EFDC.INP</code></h2>
+<p>This is the master EFDC input file. It contains several ‘cards’, not all of which must be updated for a new model. The following notes those that must be changed or verified using a new grid and/or input data.</p>
+<ul>
+<li><p>Card 9: Smoothing parameters, describes information about the grid. This can be copied from the EFDC file created with CVL grid.</p></li>
+<li><p>Card 11: Grid roughness and depth. This card appears to be turned off with ISCO (card 9) set to</p></li>
+<li><p>Card 17: Surface elevation boundary conditions. Set the appropriate number of open boundaries by direction (i.e., open cells in the gulf or the east/west where tidal flow can occur in/out). Set NPSER to 1 to have the model read in one tidal time series dataset from PSER.</p></li>
+<li><p>Card 19-22: Tidal boundaries (S, W, E, N), Enter I, J indices of appropriate tidal boundaries. Make sure the count for each boundary matches Card 17.</p></li>
+<li><p>Card 23: Indicate the number of relevant input datasets as concentration time series. Check NSSER, NTSER, and NDSER based on the available input files. Number should equal the number of unique time series inputs to be entered in Card 24. Note that <code>NQSER</code> is the number of time series and <code>NSIJ</code> is the number of grid cells associated with all, which may be less than <code>NQSER</code> (i.e., two inflows into the same cell).</p></li>
+</ul>
+<ol start="8" style="list-style-type: decimal">
+<li>Card 23 –Velocity/volume data • Enter I,J indices of volume inputs (create QSER data input file in excel). • Match the appropriate NQSERQ id (discharge) and NTSERQ id (temperature) to the I,J index. • Match the Dye time series input locations to cells of interest (as needed, may need to update dye time series file. Number of time series should be 1 for each.</li>
+<li>Card 25/26–Time constant inflow concentrations • Enter 0 for all variables with an identical number of inputs as entered for Card 24 and as listed in NQSIJ in Card 23.</li>
+<li>Card 33/34–Flow Withdrawal • Check for flow withdrawal inputs and update accordingly.</li>
+<li>Card 47–Location of south BCS • Check for flow withdrawal inputs and update accordingly.</li>
+<li>Card 48-51–Time constant south BCS • Enter 0 for all variables with an identical number of inputs as entered for Card 47 o Watch for the number of variables between 48/50 and 49/51.</li>
+<li>Card 52-66–BCS and time constants for E,W, and N boundaries. • Repeat instructions for cards 47-51 for the appropriate boundaries.</li>
+<li>Card 67–Drifter data. • Not used at this time. Ignore for now.</li>
+<li>Card80–Controls for 3d output. • Not used at this time. Ignore for now.</li>
+<li>Card87–Time Series. • Update cell references for time series outputs.</li>
+</ol>
+</div>
 
 
 
