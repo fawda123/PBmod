@@ -11,6 +11,12 @@ qser_pts <- readOGR(dsn = 'M:/GIS/EFDC', layer = 'qser_pts')
 save(qser_pts, file = 'data/qser_pts.RData', compress = 'xz')
 
 ######
+# Locations of field observations
+
+field_pts <- readOGR(dsn = 'M:/GIS/EFDC', layer = 'field_pts')
+save(field_pts, file = 'data/field_pts.RData', compress = 'xz')
+
+######
 # estimate average depth in each ij grid cell for EFDC grid
 
 # # bathymetry raster, created manually in arcgis

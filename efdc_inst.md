@@ -98,24 +98,14 @@ The I, J indices of each input were identified from a point shapefile of each lo
 
 ![](efdc_inst_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
-9)	Card 25/26–Time constant inflow concentrations
-•	Enter 0 for all variables with an identical number of inputs as entered for Card 24 and as listed in NQSIJ in Card 23.
-10)	Card 33/34–Flow Withdrawal
-•	Check for flow withdrawal inputs and update accordingly.
-11)	Card 47–Location of south BCS
-•	Check for flow withdrawal inputs and update accordingly.
-12)	Card 48-51–Time constant south BCS
-•	Enter 0 for all variables with an identical number of inputs as entered for Card 47
-o	Watch for the number of variables between 48/50 and 49/51.
-13)	Card 52-66–BCS and time constants for E,W, and N boundaries.
-•	Repeat instructions for cards 47-51 for the appropriate boundaries.
-14)	Card 67–Drifter data.
-•	Not used at this time. Ignore for now.
-15)	Card80–Controls for 3d output.
-•	Not used at this time. Ignore for now.
-16)	Card87–Time Series.
-•	Update cell references for time series outputs.
+* Card 27: Flow withdrawal and return info. This is reserved for power plant inputs and returns as two adjacent cells. Inputs as NQWR on Card 23 are entered here. 
 
+* Card 28: Time constant withdrawal and return data.  Constant values for input/returns on Card 27.
 
+* Card 30: Number of concentration boundary conditions (number of open cells to N, E, S, W)
 
+* Cards 31 - 42: Updated each cardinal direction based on number of cells for Card 30. Must provide relevant salinity and temperature time series to supply to the boundary conditions. 
 
+* Card 59: Locations for output of time series data for model calibration. Enter the grid locations of PB data.
+
+![](efdc_inst_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
