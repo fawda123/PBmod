@@ -5,6 +5,12 @@ library(rgdal)
 source('R/funcs.R')
 
 ######
+# qser locations
+
+qser_pts <- readOGR(dsn = 'M:/GIS/EFDC', layer = 'qser_pts')
+save(qser_pts, file = 'data/qser_pts.RData', compress = 'xz')
+
+######
 # estimate average depth in each ij grid cell for EFDC grid
 
 # # bathymetry raster, created manually in arcgis

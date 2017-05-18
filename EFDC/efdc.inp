@@ -423,23 +423,23 @@ C                                                                             |
       NSWSERQ:  ID NUMBER OF ASSOCIATED SAL WATER QUALITY TIME SERIES         |
 C                                                                             |
 C24 IQS  JQS  QSSE  NQSMUL NQSMFF NQSERQ NSSERQ NTSERQ NDSERQ NSDSERQ NSWSERQ |
-41	161	0	0	0	3	0	3	1	0	0	!Escambia River
-60	151	0	0	0	6	0	6	1	0	0	!Blackwater River
-61	146	0	0	0	7	0	7	0	0	0	!Yellow River
-74	121	0	0	0	9	0	9	0	0	0	!East Bay River
-68	121	0	0	0	10	0	10	0	0	0	
-33	97	0	0	0	1	0	1	0	0	0	
-31	110	0	0	0	2	0	2	0	0	0	
-47	144	0	0	0	4	0	4	0	0	0	
-48	140	0	0	0	5	0	5	0	0	0	
-73	121	0	0	0	8	0	8	0	0	0	
-99	84	0	0	0	11	0	11	1	0	0	
-126	83	0	0	0	12	0	12	1	0	0	
-44	153	0	0	0	13	0	13	0	0	0	!Ascend Performance
-37	100	0	0	0	15	0	13	0	0	0	!WWTP Main Street
-60	150	0	0	0	16	0	13	0	0	0	!Milton WWTP
-102	81	0	0	0	17	0	13	0	0	0	!Navarre Beach WWTP
-65	77	0	0	0	18	0	13	0	0	0	!Pensacola Beach WWTP
+49  41 0 0 0 18 0 13 0 0 0 !Pensacola Beach WWTP
+49  76 0 0 0 17 0 13 0 0 0 !Navarre Beach WWTP
+46  75 0 0 0 11 0 11 1 0 0 !Williams Creek
+33  35 0 0 0 15 0 13 0 0 0 !WWTP Main Street
+47 103 0 0 0 12 0 12 1 0 0 !Kohler Bayou
+29  33 0 0 0  1 0 1 0 0 0 !Bayou Chico
+41  79  0 0 0 9 0 9 0 0 0 !East Bay River
+41  78  0 0 0 8 0 8 0 0 0 !Dean Creek
+43  70 0 0 0 10 0 10 0 0 0 !Tom King Bayou
+29  40 0 0 0 2 0 2 0 0 0 !Bayou Texar
+24  52 0 0 0 5 0 5 0 0 0 !Trout Bayou
+17  63 0 0 0 7 0 7 0 0 0 !Yellow River
+17  54 0 0 0 4 0 4 0 0 0 !Mulatto Bayou
+4  46 0 0 0 13 0 13 0 0 0 !Ascend Performance
+3  46 0 0 0 3 0 3 1 0 0 !Escambia River
+8  59 0 0 0 6 0 6 1 0 0 !Blackwater River
+8  60 0 0 0 16 0 13 0 0 0 !Milton WWTP
 -------------------------------------------------------------------------------
 C25 TIME CONSTANT INFLOW CONCENTRATIONS FOR TIME CONSTANT VOLUMETRIC SOURCES  |
 C                                                                             |

@@ -90,12 +90,14 @@ This is the master EFDC input file.  It contains several 'cards', not all of whi
 
 *	Card 19-22: Tidal boundaries (S, W, E, N), Enter I, J indices of appropriate tidal boundaries. Make sure the count for each boundary matches Card 17.
 
-* Card 23: Indicate the number of relevant input datasets as concentration time series. Check NSSER, NTSER, and NDSER based on the available input files. Number should equal the number of unique time series inputs to be entered in Card 24. Note that `NQSER` is the number of time series and `NSIJ` is the number of grid cells associated with all, which may be less than `NQSER` (i.e., two inflows into the same cell).  
+* Card 23: Indicate the number of relevant input datasets as concentration time series. Check NSSER, NTSER, and NDSER based on the available input files. Values should equal the number of unique time series inputs to be entered in Card 24. Note that `NQSER` is the number of time series in `QSER.INP` and `NSIJ` is the number of grid cells associated with all.  
 
-8)	Card 23 –Velocity/volume data
-•	Enter I,J indices of volume inputs (create QSER data input file in excel).
-•	Match the appropriate NQSERQ id (discharge) and NTSERQ id (temperature) to the I,J index.
-•	Match the Dye time series input locations to cells of interest (as needed, may need to update dye time series file. Number of time series should be 1 for each.
+*	Card 24: Enter I,J indices of volume inputs (create QSER data input file in excel). Match the appropriate NQSERQ id (discharge) and NTSERQ id (temperature) to the I,J index. Match the Dye time series input locations to cells of interest (as needed, may need to update dye time series file. Number of time series should be 1 for each.
+
+The I, J indices of each input were identified from a point shapefile of each location. 
+
+![](efdc_inst_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
 9)	Card 25/26–Time constant inflow concentrations
 •	Enter 0 for all variables with an identical number of inputs as entered for Card 24 and as listed in NQSIJ in Card 23.
 10)	Card 33/34–Flow Withdrawal
