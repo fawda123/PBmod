@@ -27,7 +27,7 @@ Workflow
     
     * `celllt.inp` Horizontal cell type identifier file for saving mean mass transport.
     
-    * `dxdy.inp` File specifying horizontal grid spacing or metrics, depth, bottom elevation, bottom roughness and vegetation classes for either Cartesian or curvilinear-orthogonal horizontal grids.
+    * `dxdy.inp` File specifying horizontal grid spacing or metrics, depth, bottom elevation, bottom roughness and vegetation classes for either Cartesian or curvilinear-orthogonal horizontal grids. Depth values were added manually with an R script using a bathymetry layers.  Zero depth values will cause an error and should be floored at a minimum not equal to zero.
     
     * `lxly.inp` File specifying horizontal cell center coordinates and cell orientations for
     either Cartesian or curvilinear-orthogonal grids.
@@ -46,37 +46,39 @@ Workflow
 
 Input data for nine years were previously assembled by TetraTech. These included meteorological data for atmospheric pressure, temperature, rainfall, wind speed and direction, and cloud cover.  Thirteen inland boundary conditions included time series of freshwater inflows at eight sites and five point sources, where flow and water temperature were available at each location. Data from Offshore bounday conditions were water surface elevation (WSE)), temperature, and salinity.  Water surface elevation and temperature were obtained from the NOAA tidal station 8729840 near the port of Pensacola.  Offshore boundary salinity values were estimated at 35 psu for each cell.  The following files were copied directly from an existing model but will need to be updated if new or different boundary conditions are used.  
 
-`ASER.INP` Atmospheric forcing conditions including pressure, temperature, rainfall, evaporation by decimal julian day
+* `ASER.INP` Atmospheric forcing conditions including pressure, temperature, rainfall, evaporation by decimal julian day
 
-`DSER.INP` Dye concentration time series file.
+* `DSER.INP` Dye concentration time series file.
 
-`PSER.INP` Open boundary water surface elevation time series file, NOAA tidal station 8729840 (near port).
+* `PSER.INP` Open boundary water surface elevation time series file, NOAA tidal station 8729840 (near port).
 
-`QSER.INP` Inflows by julian day, includes rivers/streams and  point sources
+* `QSER.INP` Inflows by julian day, includes rivers/streams and  point sources
 
-`SSER.INP` Offshore salinity boundary conditions
+* `SSER.INP` Offshore salinity boundary conditions
 
-`TSER.INP` Temperature for each inflow, by julian day, including temperature from offshore boundary conditions
+* `TSER.INP` Temperature for each inflow, by julian day, including temperature from offshore boundary conditions
 
-`WSER.INP` Hourly measurements of wind speed and direction
+* `WSER.INP` Hourly measurements of wind speed and direction
 
 Other input data are not empirical observations, e.g., dye simulations, or are required to 'cold-start' the model.  These must be updated for the grid (based on i, j) and sigma layers.  An R function was created for each that requires `dxdy.inp` as input.   
 
-`DYE.INP` File with initial dye distribution for cold start simulations.
+* `DYE.INP` File with initial dye distribution for cold start simulations.
 
-`SALT.INP` File with initial salinity distribution for cold start, salinity stratified flow simulations.
+* `SALT.INP` File with initial salinity distribution for cold start, salinity stratified flow simulations.
 
-`TEMP.INP` File with initial temperature distribution for cold start simulations.
+* `TEMP.INP` File with initial temperature distribution for cold start simulations.
 
 Miscellaneous files were copied from an existing EFDC model. 
 
-`gwater.inp` File specifying the characteristic of a simple soil moisture model.
+* `efcd_add.inp` Additional information for `efdc.inp`
 
-`modchan.inp` Subgrid scale channel model specification file.
+* `gwater.inp` File specifying the characteristic of a simple soil moisture model.
 
-`moddxdy.inp` File specifying modification to cell sizes (used primarily for calibration adjustment of subgrid scale channel widths)
+* `modchan.inp` Subgrid scale channel model specification file.
 
-`show.inp` File controlling screen print of conditions in a specified cell during simulation runs.
+* `moddxdy.inp` File specifying modification to cell sizes (used primarily for calibration adjustment of subgrid scale channel widths)
+
+* `show.inp` File controlling screen print of conditions in a specified cell during simulation runs.
 
 ## Update `EFDC.INP`
 
@@ -84,7 +86,7 @@ This is the master EFDC input file.  It contains several 'cards', not all of whi
 
 * Card 9: Smoothing parameters, describes information about the grid.  This can be copied from the EFDC file created with CVL grid.
 
-* Card 11: Grid roughness and depth. This card appears to be turned off with ISCO (card 9) set to 
+* Card 11: Grid roughness and depth. This card appears to be turned off with ISCO (card 9).
 
 * Card 17: Surface elevation boundary conditions. Set the appropriate number of open boundaries by direction (i.e., open cells in the gulf or the east/west where tidal flow can occur in/out). Set NPSER to 1 to have the model read in one tidal time series dataset from PSER. 
 
@@ -106,6 +108,6 @@ The I, J indices of each input were identified from a point shapefile of each lo
 
 * Cards 31 - 42: Updated each cardinal direction based on number of cells for Card 30. Must provide relevant salinity and temperature time series to supply to the boundary conditions. 
 
-* Card 59: Locations for output of time series data for model calibration. Enter the grid locations of PB data.
+* Card 59: Locations for output of time series data for model calibration. Enter the grid locations of PB data. Maximum of nine locations.
 
 ![](efdc_inst_files/figure-html/unnamed-chunk-5-1.png)<!-- -->

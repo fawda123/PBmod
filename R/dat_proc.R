@@ -47,6 +47,7 @@ pb_grid <- pb_grid@data %>%
     I = as.character(I),
     J = 2 + J, # J is shifted in shapefile
     J = as.character(J), 
+    depth = pmax(0.5, depth), 
     depth = as.character(depth)
   )
 
@@ -73,12 +74,15 @@ deps <- dplyr::select(dxdy, I, J) %>%
 dxdy$X6 <- deps$depth
 dxdy$X7 <- paste0('-', deps$depth)
 
+# add extra column for veg type
+dxdy$X9 <- rep(0, nrow(dxdy))
+
 # format dxdy for writelines
 dxdy <- apply(dxdy, 1, paste, collapse = '  ')
 dxdy <- c(dxdyhd, dxdy)
 
-# # save
-# writeLines(dxdy, 'EFDC/dxdy.inp')
+# save
+writeLines(dxdy, 'EFDC/dxdy.inp')
 
 ######
 # setup TEMP.INP, SALT.INP, DYE.INP
