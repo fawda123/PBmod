@@ -70,3 +70,45 @@ getinp <- function(dxdyin = 'EFDC/dxdy.inp', sig = 5,  val, outfl, frstrow){
   writeLines(out, outfl)
   
 }
+
+#' Get card info
+#' 
+#' Get card information from EDFC.inp
+#' 
+#' @param path chr string of card path
+#' @param crd chr string of card number, e.g., 'C7'
+#' @param txts logical indicating if all text is returned, otherwise just a header and values
+#' 
+getcrd <- function(path, crd = 'C7', txts = FALSE){
+  
+  # read input
+  inps <- readLines(paste0(path, '/EFDC.inp')) 
+  
+  # next card
+  crdnxt <- gsub('C', '', crd) %>% 
+    as.numeric %>% 
+    `+`(1) %>% 
+    paste0('C', ., '\\s')
+  
+  # ending line from next card
+  endln <- grep(crdnxt, inps)[1] - 2
+  
+  # potential start lines
+  strlns <- paste0(crd, '\\s') %>% 
+    grep(., inps)
+  
+  # return all
+  if(txts){
+    out <- inps[strlns[1]:endln]
+  } else {
+    out <- inps[strlns[2]:endln] %>% 
+      gsub('%.*$|\\|', '', .) %>% 
+      gsub(crd, '', .) %>% 
+      gsub('^\\s+|\\s+$', '', .) %>% 
+      strsplit('\\s+') %>% 
+      do.call('rbind', .)
+  }
+  
+  return(out)
+  
+}
