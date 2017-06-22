@@ -84,6 +84,10 @@ Miscellaneous files were copied from an existing EFDC model.
 
 This is the master EFDC input file.  It contains several 'cards', not all of which must be updated for a new model. The following notes those that must be changed or verified using a new grid and/or input data.
 
+* Card 7: Simulation time steps. NTC is the number of reference time steps in the entire simulation, where the reference time step TREF is on card 8. For example, if NTC = 60, and TREF is 86400, the reference time is one day (in seconds), so the total simulation is sixty days.  NTSPTC describes the number of time steps per reference time period.  For example, if TREF is 86400 and NTSPTC is 8640, the time step is ten seconds (8640 * 10 = 86400).
+
+* Card 8: Additional time parameters including reference time period (TREF) and start time for output files (TBEGIN).
+
 * Card 9: Smoothing parameters, describes information about the grid.  This can be copied from the EFDC file created with CVL grid.
 
 * Card 11: Grid roughness and depth. This card appears to be turned off with ISCO (card 9).
@@ -108,6 +112,30 @@ The I, J indices of each input were identified from a point shapefile of each lo
 
 * Cards 31 - 42: Updated each cardinal direction based on number of cells for Card 30. Must provide relevant salinity and temperature time series to supply to the boundary conditions. 
 
+* Card 58: Controls for writing the output files.  NWTMSR is the number of time steps completed by the model for writing to the output files.  For example, if TREF (Card 8) is 86400 (one day) and NTSPTC is 8640 on Card 7, the model time step is 10 seconds.  If NWTMSR is 360, this means output is written every 360 * 10 = 3600 seconds, or every hour.  The output files have units in days, so there will be 24 values in each day.  
+
 * Card 59: Locations for output of time series data for model calibration. Enter the grid locations of PB data. Maximum of nine locations.
 
 ![](efdc_inst_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+## Evaluation of output files
+
+Individual output files are created for each reference location indicated on card 59.
+
+* `saltmsr[0-9].out` Salinity time series (psu)
+
+* `seltmsr[0-9].out` Surface elevation time series, note that these data do not have all sigma layers, i.e., it only makes sense to use results from the top surface layer.  
+
+* `u3dtmsr[0-9].out` East velocity time series (cm/s), internal mode
+
+* `uvetmsr[0-9].out` East/north velocity time series (cm/s), external mode
+
+* `v3dtmsr[0-9].out` North velocity time series (cm/s), internal mode
+
+* `w3dtmsr[0-9].out` Vertical velocity time series (cm/s), internal mode
+
+An example of the salinity output for sixty day model run, ten second time step (note the runup period):
+![](efdc_inst_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+Water surface elevation:
+![](efdc_inst_files/figure-html/unnamed-chunk-7-1.png)<!-- -->

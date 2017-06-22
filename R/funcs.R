@@ -84,18 +84,14 @@ getcrd <- function(path, crd = 'C7', txts = FALSE){
   # read input
   inps <- readLines(paste0(path, '/EFDC.inp')) 
   
-  # next card
-  crdnxt <- gsub('C', '', crd) %>% 
-    as.numeric %>% 
-    `+`(1) %>% 
-    paste0('C', ., '\\s')
-  
-  # ending line from next card
-  endln <- grep(crdnxt, inps)[1] - 2
-  
   # potential start lines
   strlns <- paste0(crd, '\\s') %>% 
     grep(., inps)
+  
+  # get end line
+  inps <- inps[strlns[1]:length(inps)]
+  strlns <- strlns - strlns[1] + 1
+  endln <- min(grep('^\\-+', inps)) - 1
   
   # return all
   if(txts){
@@ -108,6 +104,75 @@ getcrd <- function(path, crd = 'C7', txts = FALSE){
       strsplit('\\s+') %>% 
       do.call('rbind', .)
   }
+  
+  return(out)
+  
+}
+
+#' Get output files
+#'
+#' Get data from output files for a specified type
+#' 
+#' @param path chr string of path where files are located
+#' @param type chr string of output file type to import
+#' 
+getout <- function(path, type = c('sal', 'sel', 'u3d', 'uve', 'v3d', 'w3d')){
+
+  # get type arg
+  type <- match.arg(type) %>% 
+    paste0('^', ., '.*\\.out')
+      
+  outfls <- list.files(root, type, full.names = TRUE)
+  
+  out <- purrr::map(outfls, function(x){
+    
+    plt <- readLines(x)
+
+    # location name of output data
+    loc <- grep('AT LOCATION', plt) %>% 
+      plt[.] %>% 
+      gsub('^.*LOCATION\\s+|\\s+$', '', .)
+    
+    # ij location of output data
+    ij <- grep('CELL I,J', plt) %>% 
+      plt[.] %>% 
+      gsub('^.*=\\s+', '', .) %>% 
+      strsplit(., '\\s+') %>% 
+      unlist
+    
+    # location and ij
+    locij <- paste(c(loc, ij), collapse = '-')
+      
+    # data
+    dat <- plt[-c(1:4)] %>% 
+      gsub('^\\s+|\\s+$', '', .) %>% 
+      strsplit(., '\\s+') %>% 
+      purrr::map(., as.numeric) %>% 
+      do.call('rbind', .) %>% 
+      data.frame
+    
+    # number of sigma layers
+    sigls <- ncol(dat) %>% 
+      `-`(1) %>% 
+      seq(1, .) %>% 
+      paste0('k', .)
+    
+    # name the data, long format
+    names(dat) <- c('datetime', sigls)
+    dat <- tidyr::gather(dat, 'k', 'val', -datetime) %>% 
+      data.frame(locij = locij, .) %>% 
+      separate(locij, c('location', 'i', 'j'), sep = '-')
+    
+    return(dat)
+    
+  })
+  
+  # combine all sites
+  out <- enframe(out) %>% 
+    unnest %>% 
+    dplyr::select(-name) %>% 
+    group_by(location, i, j) %>% 
+    nest
   
   return(out)
   
