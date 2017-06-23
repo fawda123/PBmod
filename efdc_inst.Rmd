@@ -277,3 +277,34 @@ ggplot(toplo2, aes(x = datetime, y = val)) +
   facet_grid(location~.) + 
   scale_y_continuous('Surface elevation')
 ```
+
+Compare with observed data:
+```{r echo = F, warning = F, message = F, fig.width = 10, fig.height = 4}
+data(noaa_sel)
+
+noaa_mod <- getout(root, 'sel') %>% 
+  filter(location %in% 'NOAA') %>% 
+  .$data %>% 
+  .[[1]] %>% 
+  filter(k %in% 'k1') %>% 
+  dplyr::select(-k) %>%
+  rename(mod = val) %>% 
+  mutate(mod = mod - mean(mod))
+
+rngs <- range(noaa_mod$datetime)
+
+noaa_obs <- filter(noaa_sel, datetime >= rngs[1] & datetime <= rngs[2]) %>% 
+  mutate(obs = wlevel_m - mean(wlevel_m))
+
+ggplot() + 
+  geom_line(data = noaa_mod, aes(x = datetime, y = mod, colour = 'Modelled')) + 
+  geom_line(data = noaa_obs, aes(x = datetime, y = obs, colour = 'Observed')) + 
+  theme_bw() + 
+  theme(
+    legend.position = 'top', 
+    legend.title = element_blank()
+    ) + 
+  scale_y_continuous('Sea elevation (m)')
+
+```
+

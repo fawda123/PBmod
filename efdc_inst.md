@@ -139,3 +139,7 @@ An example of the salinity output for sixty day model run, ten second time step 
 
 Water surface elevation:
 ![](efdc_inst_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+Compare with observed data:
+![](efdc_inst_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
