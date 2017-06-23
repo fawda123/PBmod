@@ -165,7 +165,7 @@ C                                                                             |
       NDRYSTP: MIN NO. OF TIME STEPS A CELL REMAINS DRY AFTER INTIAL DYRING   |
 C         4320                                                                |
 C7   NTC NTSPTC NLTC NTTC NTCPP NTSTBC NTCNB NTCVB NTSMMT NFLTMT NDRYSTP      |
-     60  8640   0    0    10000  4      0     0     240   1       4           %CK%_01/17/2005
+     60  1440   0    0    10000  4      0     0     240   1       4           %CK%_01/17/2005
 -------------------------------------------------------------------------------
 C8  TIME-RELATED REAL PARAMETERS                                              |
 C                                                                             |

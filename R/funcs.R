@@ -116,12 +116,15 @@ getcrd <- function(path, crd = 'C7', txts = FALSE){
 #' @param path chr string of path where files are located
 #' @param type chr string of output file type to import
 #' 
-getout <- function(path, type = c('sal', 'sel', 'u3d', 'uve', 'v3d', 'w3d')){
+getout <- function(path, type = c('sal', 'sel', 'u3d', 'uve', 'v3d', 'w3d'), orig = '1996-12-31 0:0', tz = 'America/Regina'){
 
   # get type arg
   type <- match.arg(type) %>% 
     paste0('^', ., '.*\\.out')
       
+  # date origin 
+  orig <- as.POSIXct(orig, tz = tz)
+    
   outfls <- list.files(root, type, full.names = TRUE)
   
   out <- purrr::map(outfls, function(x){
@@ -167,9 +170,10 @@ getout <- function(path, type = c('sal', 'sel', 'u3d', 'uve', 'v3d', 'w3d')){
     
   })
   
-  # combine all sites
+  # combine all sites, convert datetime to posix
   out <- enframe(out) %>% 
     unnest %>% 
+    mutate(datetime = as.POSIXct(datetime * 60 * 60 * 24, origin = orig, tz = tz)) %>% 
     dplyr::select(-name) %>% 
     group_by(location, i, j) %>% 
     nest

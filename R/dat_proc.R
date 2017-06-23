@@ -96,3 +96,34 @@ getinp(dxdyin = 'EFDC/dxdy.inp', sig = 5, val = 23, outfl = 'EFDC/SALT.INP',
 getinp(dxdyin = 'EFDC/dxdy.inp', sig = 5, val = 0, outfl = 'EFDC/DYE.INP', 
   frstrow = 'C       DYE.INP      PENSACOLA BAY, PPT')
 
+######
+# get tidal level data from NOAA station at PB downtown
+# https://tidesandcurrents.noaa.gov/waterlevels.html?id=8729840
+
+# only one year can be downloaded per request
+yrs <- seq(2002, 2009)
+url <- 'https://tidesandcurrents.noaa.gov/api/datagetter?product=hourly_height&application=NOS.COOPS.TAC.WL&begin_date=20020101&end_date=20021231&datum=MLLW&station=8729840&time_zone=LST&units=metric&format=CSV'
+
+# download each year by changing dates in url
+noaa_sel <- purrr::map(yrs, function(x){
+  
+  strdt <- paste0(x, '0101')
+  enddt <- paste0(x, '1231')
+  
+  urlin <- gsub('(&begin_date=)[0-9]+(&)', paste0('\\1', strdt, '\\2'), url)
+  urlin <- gsub('(&end_date=)[0-9]+(&)', paste0('\\1', enddt, '\\2'), urlin)
+  
+  tmp <- read.csv(urlin)
+  
+  return(tmp)
+
+  }) %>% 
+  do.call('rbind', .) %>% 
+  mutate(
+    datetime = as.character(Date.Time), 
+    datetime = as.POSIXct(datetime, tz = 'America/Regina'), 
+    wlevel_m = Water.Level
+  ) %>% 
+  dplyr::select(datetime, wlevel_m)
+  
+save(noaa_sel, file = 'data/noaa_sel.RData', compress = 'xz')

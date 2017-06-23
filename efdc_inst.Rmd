@@ -71,6 +71,7 @@ p <- ggplot(toplo) +
   theme_minimal() +
   theme(legend.position = 'top', axis.title.x = element_blank(), axis.title.y = element_blank()) 
 p
+
 ```
 
 ```{r, fig.height = 8, fig.width = 6}
